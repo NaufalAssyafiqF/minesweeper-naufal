@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MINESWEEPER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ HOME ============ -->
+  <section id="screen-home" class="screen active">
+    <div class="home-box">
+      <h1 class="title">MINESWEEPER</h1>
+      <p class="tagline">PILIH TINGKAT KESULITAN</p>
+
+      <div class="menu">
+        <button class="btn level-btn" data-level="pemula">
+          <span>PEMULA</span><small>9x9 &middot; 10 BOM</small>
+        </button>
+        <button class="btn level-btn" data-level="menengah">
+          <span>MENENGAH</span><small>16x16 &middot; 40 BOM</small>
+        </button>
+        <button class="btn level-btn" data-level="mahir">
+          <span>MAHIR</span><small>30x16 &middot; 99 BOM</small>
+        </button>
+        <button class="btn level-btn" data-level="kustom" id="btn-kustom">
+          <span>KUSTOM</span><small>PILIH SENDIRI</small>
+        </button>
+      </div>
+
+      <button class="btn btn-gold" id="btn-leaderboard">LEADERBOARD</button>
+    </div>
+    <p class="hint">TAP = BUKA &middot; TEKAN LAMA = BENDERA</p>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section id="screen-game" class="screen">
+    <div class="game-top">
+      <button class="btn btn-sm" id="btn-home">&lt; HOME</button>
+      <div class="led">
+        <svg class="ico" viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="2" y="2" width="4" height="4" fill="#e2e8f0"/><rect x="3" y="1" width="2" height="1" fill="#e2e8f0"/><rect x="1" y="3" width="1" height="2" fill="#e2e8f0"/><rect x="6" y="3" width="1" height="2" fill="#e2e8f0"/><rect x="3" y="6" width="2" height="1" fill="#e2e8f0"/><rect x="5" y="0" width="1" height="1" fill="#fbbf24"/><rect x="6" y="0" width="1" height="1" fill="#fbbf24"/></svg>
+        <span id="mines-count">000</span>
+      </div>
+      <button class="btn btn-sm" id="btn-flagmode" title="Mode bendera (tap untuk toggle)" aria-pressed="false">
+        <svg class="ico" viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="3" y="0" width="1" height="6" fill="currentColor"/><rect x="4" y="1" width="3" height="2" fill="#ef4444"/><rect x="4" y="3" width="2" height="1" fill="#ef4444"/><rect x="2" y="6" width="4" height="1" fill="currentColor"/></svg>
+        <span class="btn-flag-label">MODE</span>
+      </button>
+      <div class="led">
+        <span id="time-count">000</span>
+      </div>
+    </div>
+
+    <div id="board-wrap">
+      <div id="board" class="board"></div>
+    </div>
+
+    <p class="hint" id="game-hint">KLIK KIRI = BUKA &middot; KLIK KANAN = BENDERA</p>
+
+    <div id="overlay" class="overlay hidden">
+      <div class="panel">
+        <h2 id="ov-title">MENANG</h2>
+        <p id="ov-detail" class="ov-detail">WAKTU: 00:42</p>
+        <p id="ov-record" class="ov-record hidden">REKOR BARU!</p>
+        <div class="ov-btns">
+          <button class="btn" id="btn-again">MAIN LAGI</button>
+          <button class="btn" id="ov-home">HOME</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEADERBOARD ============ -->
+  <section id="screen-board" class="screen">
+    <div class="game-top">
+      <button class="btn btn-sm" id="btn-back">&lt; HOME</button>
+      <h2 class="sub-title">LEADERBOARD</h2>
+      <span class="top-spacer"></span>
+    </div>
+
+    <div class="stat-grid" id="stat-grid"></div>
+
+    <div class="tabs" id="lb-tabs"></div>
+    <ol id="top-list" class="top-list"></ol>
+  </section>
+
+  <!-- ============ DIALOG KUSTOM ============ -->
+  <div id="dialog-kustom" class="overlay hidden">
+    <div class="panel">
+      <h2 class="sub-title">PAPAN KUSTOM</h2>
+      <div class="kustom-form">
+        <label>KOLOM <input id="k-cols" type="number" min="5" max="40" value="12"></label>
+        <label>BARIS <input id="k-rows" type="number" min="5" max="30" value="12"></label>
+        <label>BOM <input id="k-mines" type="number" min="1" value="20"></label>
+      </div>
+      <p class="hint" id="k-info">MAKS BOM: 134</p>
+      <div class="ov-btns">
+        <button class="btn" id="k-start">MULAI</button>
+        <button class="btn" id="k-cancel">BATAL</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-sm" id="btn-audio" title="Suara"></button>
+
+  <script src="game.js"></script>
+</body>
+</html>

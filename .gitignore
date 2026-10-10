@@ -1,0 +1,7 @@
+# data lokal skill/agent — jangan ikut repo
+.superpowers
+
+# dokumen internal (PRD) — tidak dipublikasikan
+PRD.md
+
+.gitignore
