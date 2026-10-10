@@ -92,9 +92,33 @@
     <div class="panel">
       <h2 class="sub-title">PAPAN KUSTOM</h2>
       <div class="kustom-form">
-        <label>KOLOM <input id="k-cols" type="number" min="5" max="40" value="12"></label>
-        <label>BARIS <input id="k-rows" type="number" min="5" max="30" value="12"></label>
-        <label>BOM <input id="k-mines" type="number" min="1" value="20"></label>
+        <label>KOLOM
+          <span class="stepper">
+            <input id="k-cols" type="number" inputmode="numeric" min="5" max="40" value="12">
+            <span class="stp-btns">
+              <button type="button" class="stp stp-up" data-target="k-cols" aria-label="Tambah kolom"><svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="3" y="1" width="2" height="1" fill="currentColor"/><rect x="2" y="2" width="4" height="1" fill="currentColor"/><rect x="1" y="3" width="6" height="1" fill="currentColor"/></svg></button>
+              <button type="button" class="stp stp-down" data-target="k-cols" aria-label="Kurangi kolom"><svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="1" y="4" width="6" height="1" fill="currentColor"/><rect x="2" y="5" width="4" height="1" fill="currentColor"/><rect x="3" y="6" width="2" height="1" fill="currentColor"/></svg></button>
+            </span>
+          </span>
+        </label>
+        <label>BARIS
+          <span class="stepper">
+            <input id="k-rows" type="number" inputmode="numeric" min="5" max="30" value="12">
+            <span class="stp-btns">
+              <button type="button" class="stp stp-up" data-target="k-rows" aria-label="Tambah baris"><svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="3" y="1" width="2" height="1" fill="currentColor"/><rect x="2" y="2" width="4" height="1" fill="currentColor"/><rect x="1" y="3" width="6" height="1" fill="currentColor"/></svg></button>
+              <button type="button" class="stp stp-down" data-target="k-rows" aria-label="Kurangi baris"><svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="1" y="4" width="6" height="1" fill="currentColor"/><rect x="2" y="5" width="4" height="1" fill="currentColor"/><rect x="3" y="6" width="2" height="1" fill="currentColor"/></svg></button>
+            </span>
+          </span>
+        </label>
+        <label>BOM
+          <span class="stepper">
+            <input id="k-mines" type="number" inputmode="numeric" min="1" value="20">
+            <span class="stp-btns">
+              <button type="button" class="stp stp-up" data-target="k-mines" aria-label="Tambah bom"><svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="3" y="1" width="2" height="1" fill="currentColor"/><rect x="2" y="2" width="4" height="1" fill="currentColor"/><rect x="1" y="3" width="6" height="1" fill="currentColor"/></svg></button>
+              <button type="button" class="stp stp-down" data-target="k-mines" aria-label="Kurangi bom"><svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="1" y="4" width="6" height="1" fill="currentColor"/><rect x="2" y="5" width="4" height="1" fill="currentColor"/><rect x="3" y="6" width="2" height="1" fill="currentColor"/></svg></button>
+            </span>
+          </span>
+        </label>
       </div>
       <p class="hint" id="k-info">MAKS BOM: 134</p>
       <div class="ov-btns">

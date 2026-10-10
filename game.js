@@ -497,7 +497,7 @@ function paintRevealed(i) {
 }
 
 /* ---------- input: mouse + sentuh ---------- */
-let lpTimer = null, suppressClick = false, lpX = 0, lpY = 0;
+let lpTimer = null, suppressClick = false, lpX = 0, lpY = 0, lpFired = false, touchActive = false;
 
 function cellIndexFromEvent(e) {
   const el = e.target.closest('.cell');
@@ -509,16 +509,32 @@ function doFlag(i) { if (i >= 0) flag(i); }
 board.addEventListener('contextmenu', (e) => {
   e.preventDefault();
   const i = cellIndexFromEvent(e);
-  if (i >= 0) doFlag(i);
+  if (i < 0) return;
+  if (touchActive) {
+    // HP: menu bawaan tekan-tahan. Bendera diurus SEKALI oleh gestur ini —
+    // toggle lagi di sini penyebab bendera pasang-lalu-hilang.
+    if (!lpFired) {
+      lpFired = true;
+      suppressClick = true;
+      doFlag(i);
+    }
+    return;
+  }
+  doFlag(i); // desktop: klik kanan
 });
 
 board.addEventListener('pointerdown', (e) => {
+  lpFired = false; // gestur baru → izinkan satu kali ubah bendera
+  suppressClick = false; // gestur baru → jangan menelan tap pertama pemain
+  touchActive = e.pointerType !== 'mouse';
   if (e.pointerType === 'mouse') return; // desktop pakai klik kanan
   const i = cellIndexFromEvent(e);
   if (i < 0) return;
   lpX = e.clientX; lpY = e.clientY;
   lpTimer = setTimeout(() => {
     lpTimer = null;
+    if (lpFired) return; // gestur ini sudah mengubah bendera — jangan toggle lagi
+    lpFired = true;
     suppressClick = true;
     if (navigator.vibrate) navigator.vibrate(30);
     doFlag(i);
@@ -602,7 +618,9 @@ function openKustom() {
   kDialog.classList.remove('hidden');
 }
 
-[kCols, kRows, kMines].forEach((el) => el.addEventListener('input', clampInputs));
+// Clamp HANYA saat keluar input (blur) — jangan saat mengetik,
+// supaya bisa memasukkan angka multi-digit (mis. 11) tanpa dimakan batas minimum.
+[kCols, kRows, kMines].forEach((el) => el.addEventListener('blur', clampInputs));
 
 $('#k-start').addEventListener('click', () => {
   const s = clampInputs();
@@ -611,6 +629,30 @@ $('#k-start').addEventListener('click', () => {
 });
 
 $('#k-cancel').addEventListener('click', () => kDialog.classList.add('hidden'));
+
+/* ---------- stepper ▲▼ (kolom/baris/bom) ---------- */
+document.querySelectorAll('.stp').forEach((b) => {
+  const dir = b.classList.contains('stp-up') ? 1 : -1;
+  const target = document.getElementById(b.dataset.target);
+  let repTimer = null;
+
+  const step = () => {
+    target.value = (Number(target.value) || 0) + dir;
+    clampInputs();
+  };
+  const stop = () => {
+    if (repTimer) { clearInterval(repTimer); repTimer = null; }
+  };
+
+  b.addEventListener('pointerdown', (e) => {
+    e.preventDefault(); // cegah fokus pindah / seleksi teks / zoom dobel-tap
+    step();
+    clearInterval(repTimer);
+    repTimer = setInterval(step, 90); // tahan = ulang cepat
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => b.addEventListener(ev, stop));
+  b.addEventListener('contextmenu', (e) => e.preventDefault()); // tahan di HP: tanpa menu
+});
 
 /* ---------- leaderboard ---------- */
 let lbTab = store.lastLevel || 'pemula';

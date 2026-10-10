@@ -341,6 +341,31 @@ main, .screen { width: 100%; }
 
 .kustom-form input:focus { outline: none; border-color: var(--neon); box-shadow: 0 0 8px rgba(56, 189, 248, 0.6); }
 
+/* stepper ▲▼ */
+.stepper { display: flex; align-items: stretch; gap: 6px; }
+
+.stp-btns { display: flex; flex-direction: column; gap: 4px; }
+
+.stp {
+  font-family: inherit;
+  color: var(--neon);
+  background: var(--panel);
+  border: 2px solid var(--neon-soft);
+  border-radius: 2px;
+  padding: 4px 8px;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stp svg { width: 10px; height: 10px; display: block; }
+
+.stp:active { border-color: var(--neon); background: rgba(56, 189, 248, 0.18); box-shadow: 0 0 8px rgba(56, 189, 248, 0.5); }
+
 /* ============ LEADERBOARD ============ */
 
 #screen-board { max-width: 640px; margin: 0 auto; }
